@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cân Bằng Master 10 — Full Learning System • 400 câu</title>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--panel:#eef4ff;--panel2:#f8fafc;--text:#0f172a;--muted:#64748b;--line:#dbe3ee;--accent:#2563eb;--ok:#15803d;--bad:#b91c1c;--warn:#b45309}
+*{box-sizing:border-box} body{margin:0;font-family:"Times New Roman",Times,serif;background:var(--bg);color:var(--text)} button,select{font:inherit}
+.app{max-width:1200px;margin:auto;padding:18px} .hero{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;background:linear-gradient(135deg,#eff6ff,#fff);border:1px solid var(--line);border-radius:22px;padding:20px}
+.hero h1{margin:0 0 6px;font-size:clamp(24px,4vw,38px)} .muted{color:var(--muted)} .small{font-size:13px} .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.tab,.btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700;min-height:42px} .tab.active,.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)} .btn.good{background:#16a34a;color:#fff;border-color:#16a34a} .btn.danger{color:#b91c1c}
+.view{display:none} .view.active{display:block} .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px} .grid2{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(270px,.7fr);gap:16px} @media(max-width:820px){.grid2{grid-template-columns:1fr}}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap} .spread{justify-content:space-between} .tag,.pill{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-size:12px;background:#fff;font-weight:800}
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px} @media(max-width:650px){.metric-grid{grid-template-columns:repeat(2,1fr)}} .metric{background:var(--panel2);border-radius:14px;padding:12px;text-align:center} .metric b{display:block;font-size:22px}
+.progress{height:10px;background:var(--line);border-radius:999px;overflow:hidden} .progress>div{height:100%;background:var(--accent);border-radius:999px}
+.question{font-size:21px;font-weight:800;line-height:1.45;margin:16px 0} .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px} @media(max-width:620px){.choices{grid-template-columns:1fr}}
+.choice{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px;text-align:left;cursor:pointer;font-weight:700;min-height:48px} .choice.correct{background:#f0fdf4;border-color:#86efac} .choice.wrong{background:#fef2f2;border-color:#fecaca}
+.feedback{margin-top:12px;border-radius:14px;padding:12px;border:1px solid var(--line)} .feedback.ok{background:#f0fdf4;border-color:#86efac} .feedback.bad{background:#fef2f2;border-color:#fecaca} .socrates{margin-top:8px;padding:10px;border:1px dashed var(--accent);border-radius:10px;background:#fff}
+.levels,.daily-grid,.exam-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px} .level,.day,.exam-card{border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px} .level h3,.day h3,.exam-card h3{margin:0 0 6px}
+.select{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff;min-height:42px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px} table{border-collapse:collapse;width:100%;min-width:760px;background:#fff} th,td{padding:10px;border-bottom:1px solid var(--line);font-size:12px;text-align:left} th{background:var(--panel2)}
+.hidden{display:none!important} .timer{font-size:24px;font-weight:900;font-variant-numeric:tabular-nums} .timer.danger{color:#b91c1c}
+.exam-nav{display:grid;grid-template-columns:repeat(8,1fr);gap:6px} .navq{border:1px solid var(--line);background:#fff;border-radius:8px;min-height:34px;cursor:pointer} .navq.answered{background:#dbeafe} .navq.current{outline:3px solid var(--accent)}
+.teacher{border:2px solid var(--accent);background:#f8fbff;border-radius:20px;padding:16px;margin-bottom:16px} .teacher-layout{display:grid;grid-template-columns:1fr 1fr;gap:14px} @media(max-width:800px){.teacher-layout{grid-template-columns:1fr}}
+.teacher-svg{width:100%;height:auto} .teacher-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:12px 0} .teacher-step{font-size:11px;padding:8px 5px;border:1px solid var(--line);border-radius:9px;text-align:center;background:#fff} .teacher-step.active{background:var(--accent);color:#fff} .teacher-step.done{background:#ecfdf5;color:#166534;border-color:#86efac}
+.lock-note{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:12px;padding:9px;font-weight:800;font-size:13px}
+.eq,.chem{font-family:"Times New Roman",Times,serif;font-size:1.08em;letter-spacing:.01em}.chem sub,.eq sub{font-size:.72em;vertical-align:sub;line-height:0}.chem sup,.eq sup{font-size:.72em;vertical-align:super;line-height:0} sub{font-size:.72em} .coef{display:inline-block;min-width:18px;text-align:right;font-weight:900;color:#1d4ed8;margin-right:2px}
+.mastery-bar{height:12px;background:var(--line);border-radius:999px;overflow:hidden} .mastery-bar>div{height:100%;background:var(--accent)} .exam-card.locked{opacity:.6} .exam-card.recommended{outline:3px solid var(--accent);outline-offset:1px} .exam-card.done{background:#f0fdf4;border-color:#86efac}
+.radar{width:100%;height:auto} .lesson-note{background:var(--panel2);border-left:4px solid var(--accent);padding:10px;border-radius:8px}
+
+.daily-head{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:14px}
+@media(max-width:820px){.daily-head{grid-template-columns:1fr}}
+.today-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+@media(max-width:650px){.today-summary{grid-template-columns:repeat(2,1fr)}}
+.day.today{outline:3px solid var(--accent);outline-offset:1px}.day.completed{background:#f0fdf4;border-color:#86efac}.day-actions{display:flex;gap:7px;flex-wrap:wrap}.day-actions .btn{flex:1;min-width:105px}
+.adaptive-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:14px}@media(max-width:850px){.adaptive-grid{grid-template-columns:1fr}}
+.grade-badge{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;font-size:29px;font-weight:900;border:2px solid var(--line)}.grade-A{background:#f0fdf4;border-color:#86efac;color:#166534}.grade-B{background:#fffbeb;border-color:#fde68a;color:#92400e}.grade-C{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+.analysis-list{display:grid;gap:8px;margin-top:10px}.analysis-item{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.analysis-item .meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.skill-radar{width:100%;height:auto;display:block}.radar-label{font-size:10px;fill:#475569;font-weight:700;font-family:\"Times New Roman\",Times,serif}.radar-value{font-size:9px;fill:#64748b;font-family:\"Times New Roman\",Times,serif}
+.review-preview{display:grid;gap:8px;margin-top:10px}.review-item,.review-q{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.review-q.correct{background:#f0fdf4;border-color:#86efac}.review-q.wrong{background:#fef2f2;border-color:#fecaca}
+.visual-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}.visual-card{border:1px solid var(--line);border-radius:16px;background:#fff;padding:13px}.visual-card svg{width:100%;height:auto;display:block}.visual-card text,.teacher-svg text{font-family:\"Times New Roman\",Times,serif}
+
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="hero">
+    <div>
+      <span class="tag">⚗️ CÂN BẰNG MASTER 10</span>
+      <h1>Cân bằng phản ứng hóa học</h1>
+      <p class="muted">400 bài tập • 8 chặng • AI Teacher • Radar SVG • Nhật ký 7 ngày • 10 đề thích nghi</p>
+    </div>
+    <div class="row">
+      <span class="pill" id="topDone">Đã làm: 0</span>
+      <span class="pill" id="topAcc">Chính xác: 0%</span>
+      <span class="pill" id="topWrong">Sổ sai: 0</span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-view="roadmap">🧭 Lộ trình</button>
+    <button class="tab" data-view="practice">🧪 Luyện 400 câu</button>
+    <button class="tab" data-view="daily">📅 Nhật ký 7 ngày</button>
+    <button class="tab" data-view="exam">🏛 10 đề thích nghi</button>
+    <button class="tab" data-view="wrong">📕 Sổ câu sai</button>
+    <button class="tab" data-view="notes">🧠 Ghi nhớ nhanh</button>
+  </nav>
+
+  <section class="view active" id="roadmap">
+    <div class="card">
+      <div class="row spread">
+        <div><h2>8 chặng × 50 câu = 400 câu</h2><p class="muted">Mỗi chặng tăng dần từ đặt hệ số đơn giản đến phản ứng nhiều chất và phản ứng oxi hóa–khử.</p></div>
+        <span class="pill" id="roadText">0 / 400</span>
+      </div>
+      <div class="progress"><div id="roadProgress" style="width:0%"></div></div>
+      <div class="levels" id="levels" style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <section class="view" id="practice">
+    <div id="teacherGate" class="teacher hidden">
+      <div class="row spread">
+        <div><span class="tag">🤖 AI TEACHER MODE</span><h2 id="teacherTitle" style="margin:7px 0 4px">Mini-lesson 5 phút</h2><p class="muted" id="teacherSubtitle"></p></div>
+        <div style="text-align:right"><div class="small muted">Thời gian học lại</div><div class="timer" id="teacherTimer">05:00</div></div>
+      </div>
+      <div class="lock-note">🔒 Sai 3 câu cùng dạng → câu mới tạm khóa. Học đủ 5 phút + checkpoint ≥ 2/3 để mở.</div>
+      <div class="teacher-steps" id="teacherSteps"></div>
+      <div class="teacher-layout">
+        <div class="card"><div id="teacherLesson"></div><div class="socrates" id="teacherAsk"></div></div>
+        <div class="card"><div class="small muted">Minh họa SVG</div><div id="teacherSvg"></div></div>
+      </div>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="teacherPrev">← Bước trước</button>
+        <span class="small muted" id="teacherHint">Tự trả lời trước khi sang bước sau.</span>
+        <button class="btn primary" id="teacherNext">Bước tiếp →</button>
+      </div>
+      <div id="teacherCheckpoint" class="hidden" style="margin-top:14px"></div>
+    </div>
+
+    <div class="grid2" id="practiceWorkspace">
+      <div class="card">
+        <div class="row spread">
+          <div>
+            <div class="small muted">Chặng luyện tập</div>
+            <select class="select" id="practiceLevel">
+              <option value="1">Chặng 1 — Hệ số cơ bản</option><option value="2">Chặng 2 — Phân hủy & thế</option>
+              <option value="3">Chặng 3 — Axit–bazơ & trao đổi</option><option value="4">Chặng 4 — Phản ứng cháy</option>
+              <option value="5">Chặng 5 — Nhóm nguyên tử</option><option value="6">Chặng 6 — Oxi hóa–khử</option>
+              <option value="7">Chặng 7 — Dạng đặc biệt</option><option value="8">Chặng 8 — Tổng hợp khó</option>
+            </select>
+          </div>
+          <span class="pill" id="practiceCounter">Câu 1/50</span>
+        </div>
+        <div class="progress" style="margin-top:10px"><div id="practiceProgress" style="width:0%"></div></div>
+        <div class="question" id="practiceQuestion"></div>
+        <div class="choices" id="practiceChoices"></div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn" id="hintBtn">💡 Gợi ý Socrates</button>
+          <button class="btn primary" id="nextPractice" disabled>Câu tiếp →</button>
+        </div>
+        <div id="hintBox" class="socrates hidden"></div>
+        <div id="practiceFeedback" class="hidden"></div>
+      </div>
+      <aside>
+        <div class="card">
+          <h3>Quy trình 4 bước</h3>
+          <ol class="small">
+            <li>Đếm nguyên tử mỗi nguyên tố ở 2 vế.</li>
+            <li>Ưu tiên nguyên tố xuất hiện ít chất nhất / nhóm nguyên tử giữ nguyên.</li>
+            <li>Đặt hệ số, không đổi chỉ số trong công thức.</li>
+            <li>Rút gọn về bộ số nguyên tối giản và kiểm tra lại.</li>
+          </ol>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3>Tiến độ chặng</h3>
+          <div class="metric-grid">
+            <div class="metric"><b id="pDone">0</b><span class="small muted">Đã làm</span></div>
+            <div class="metric"><b id="pCorrect">0</b><span class="small muted">Đúng</span></div>
+            <div class="metric"><b id="pAcc">0%</b><span class="small muted">Chính xác</span></div>
+            <div class="metric"><b id="pStreak">0</b><span class="small muted">Chuỗi đúng</span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="view" id="daily">
+    <div class="daily-head">
+      <div class="card">
+        <div class="row spread"><div><h2>📅 Lịch học 7 ngày + tổng hợp tự động</h2><p class="muted">Tự ghi số câu, đúng/sai, thời gian học, điểm thi, xếp loại A/B/C và trạng thái “Đã thuộc”.</p></div><span class="pill" id="todayLabel">Hôm nay</span></div>
+        <div class="today-summary" id="todaySummary" style="margin-top:12px"></div>
+      </div>
+      <div class="card"><h3>🎯 Chuẩn hoàn thành tuần</h3><p class="small">• Hoàn thành 400 câu trong 6 ngày.<br>• Làm sạch sổ sai mỗi tối.<br>• Ngày 7: 2 đề × 40 câu.<br>• Mục tiêu cuối: ≥90% và tự giải thích được cách cân bằng.</p><div class="progress"><div id="weekProgress" style="width:0%"></div></div><p class="small muted" id="weekProgressText">0/7 ngày đạt mục tiêu</p></div>
+    </div>
+    <div class="card" style="margin-top:14px"><h2>🗓 Việc phải làm từng ngày</h2><div class="daily-grid" id="dailyCards"></div></div>
+    <div class="card" style="margin-top:14px"><h2>📊 Tổng hợp kết quả theo ngày</h2><div class="table-wrap"><table><thead><tr><th>Ngày</th><th>Xếp loại</th><th>Mục tiêu</th><th>Đã làm</th><th>Đúng/Sai</th><th>Chính xác</th><th>Đề thi</th><th>Tốt nhất</th><th>Thời gian</th><th>Thuộc?</th></tr></thead><tbody id="dailyBody"></tbody></table></div></div>
+    <div class="adaptive-grid" style="margin-top:14px">
+      <div class="card"><div class="row spread"><div><h2>🧭 Phân tích cuối ngày</h2><p class="muted">Tự tìm dạng bài yếu nhất và quyết định bài ôn ngày mai.</p></div><div class="grade-badge grade-B" id="dayGradeBadge">B</div></div><div class="analysis-list" id="dayAnalysis"></div><div class="lesson-note" id="tomorrowPlan" style="margin-top:10px"></div></div>
+      <div class="card"><div class="row spread"><div><h2>📈 Radar năng lực SVG</h2><p class="muted">Càng gần mép ngoài càng thành thạo.</p></div><span class="tag">SVG</span></div><svg id="skillRadar" class="skill-radar" viewBox="0 0 400 350" role="img" aria-label="Radar năng lực cân bằng phản ứng"><g id="radarGrid"></g><g id="radarAxes"></g><polygon id="radarArea" points="" fill="rgba(37,99,235,.14)" stroke="#2563eb" stroke-width="3"></polygon><g id="radarDots"></g><g id="radarLabels"></g></svg></div>
+    </div>
+    <div class="card" style="margin-top:14px"><div class="row spread"><div><h2>🧠 Bài ôn tự động cho ngày mai</h2><p class="muted">Ưu tiên câu từng sai và 2 dạng yếu nhất. Mỗi bộ gồm 20 câu thích nghi.</p></div><span class="pill" id="reviewCount">20 câu</span></div><div class="row" style="margin-top:10px"><button class="btn primary" id="buildReview">Tạo lại bài ôn</button><button class="btn" id="startReview">Bắt đầu ôn</button></div><div class="review-preview" id="reviewPreview"></div><div id="reviewRunner" style="margin-top:12px"></div></div>
+  </section>
+
+  <section class="view" id="exam">
+    <div id="examSetup">
+      <div class="grid2">
+        <div class="card">
+          <span class="tag">🏛 PHÒNG LUYỆN ĐỀ</span>
+          <h2>10 đề × 40 câu — tăng khó theo mức thành thạo</h2>
+          <p class="muted">Đề sau mở khi đạt chuẩn đề trước. App ưu tiên dạng em yếu và nâng tỉ lệ câu khó khi Mastery tăng.</p>
+          <div class="mastery-bar"><div id="masteryFill" style="width:0%"></div></div>
+          <div class="metric-grid" style="margin-top:10px">
+            <div class="metric"><b id="masteryScore">0</b><span class="small muted">Mastery /100</span></div>
+            <div class="metric"><b id="masteryTier">Cơ bản</b><span class="small muted">Bậc hiện tại</span></div>
+            <div class="metric"><b id="passedExams">0/10</b><span class="small muted">Đề đạt chuẩn</span></div>
+            <div class="metric"><b id="bestExam">—</b><span class="small muted">Điểm tốt nhất</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>📈 Thang độ khó SVG</h3>
+          <svg viewBox="0 0 420 220" class="radar" aria-label="Thang độ khó 10 đề">
+            <line x1="35" y1="180" x2="390" y2="45" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round"/>
+            <g id="examDots"></g>
+            <text x="28" y="210" font-size="12" font-weight="700">Cơ bản</text><text x="330" y="30" font-size="12" font-weight="700">Thử thách</text>
+          </svg>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="row spread"><h2>Chọn đề</h2><label class="small">Thời gian <select id="examMinutes" class="select"><option>25</option><option selected>30</option><option>35</option><option>40</option></select> phút</label></div>
+        <div class="exam-grid" id="examGrid"></div>
+      </div>
+    </div>
+
+    <div class="grid2 hidden" id="examRun">
+      <div class="card">
+        <div class="row spread"><span class="tag" id="examTag"></span><div class="timer" id="examTimer">30:00</div></div>
+        <div class="small muted" id="examCounter" style="margin-top:8px"></div>
+        <div class="question" id="examQuestion"></div><div class="choices" id="examChoices"></div>
+        <div class="row spread" style="margin-top:12px"><div class="row"><button class="btn" id="prevExam">← Trước</button><button class="btn" id="nextExam">Sau →</button></div><button class="btn good" id="submitExam">Nộp bài</button></div>
+      </div>
+      <aside><div class="card"><h3>Phiếu trả lời</h3><div class="exam-nav" id="examNav"></div><p class="small muted" id="answeredCount"></p></div></aside>
+    </div>
+    <div class="card hidden" id="examResult"></div>
+  </section>
+
+  <section class="view" id="wrong">
+    <div class="card"><div class="row spread"><div><h2>📕 Sổ câu sai</h2><p class="muted">Mỗi câu sai được lưu để ôn lại sau.</p></div><span class="pill" id="wrongCount">0 câu</span></div><div id="wrongList"></div></div>
+  </section>
+
+  <section class="view" id="notes">
+    <div class="card">
+      <h2>🧠 Thư viện ghi nhớ trực quan SVG</h2><p class="muted">Công thức dùng Times New Roman; chỉ số dưới cho số nguyên tử, chỉ số trên cho điện tích/số oxi hóa; mũi tên dùng → hoặc ⇌.</p>
+      <div class="visual-grid">
+        <div class="visual-card"><h3>1. Hệ số ≠ chỉ số</h3><svg viewBox="0 0 440 240" role="img" aria-label="Hệ số và chỉ số"><text x="32" y="75" font-size="31" font-weight="900"><tspan>2H</tspan><tspan baseline-shift="sub" font-size="20">2</tspan><tspan> + O</tspan><tspan baseline-shift="sub" font-size="20">2</tspan><tspan> → 2H</tspan><tspan baseline-shift="sub" font-size="20">2</tspan><tspan>O</tspan></text><line x1="33" y1="92" x2="55" y2="92" stroke="#2563eb" stroke-width="5"/><text x="32" y="127" fill="#2563eb" font-weight="800">Hệ số: được thay đổi</text><text x="230" y="127" fill="#b91c1c" font-weight="800">Chỉ số: KHÔNG sửa</text><text x="32" y="185" font-size="16" font-weight="700">Đổi chỉ số = đổi chất, không còn là cân bằng.</text></svg></div>
+        <div class="visual-card"><h3>2. Phản ứng cháy: C → H → O</h3><svg viewBox="0 0 440 240" role="img" aria-label="Thứ tự cân bằng phản ứng cháy"><rect x="35" y="75" width="100" height="62" rx="14" fill="#dbeafe"/><text x="85" y="112" text-anchor="middle" font-size="20" font-weight="900">C</text><line x1="140" y1="106" x2="185" y2="106" stroke="#2563eb" stroke-width="4"/><rect x="190" y="75" width="100" height="62" rx="14" fill="#fef3c7"/><text x="240" y="112" text-anchor="middle" font-size="20" font-weight="900">H</text><line x1="295" y1="106" x2="335" y2="106" stroke="#2563eb" stroke-width="4"/><rect x="340" y="75" width="65" height="62" rx="14" fill="#fee2e2"/><text x="372" y="112" text-anchor="middle" font-size="20" font-weight="900">O</text><text x="220" y="185" text-anchor="middle" font-weight="800"><tspan>C</tspan><tspan baseline-shift="sub" font-size="11">x</tspan><tspan>H</tspan><tspan baseline-shift="sub" font-size="11">y</tspan><tspan> + O</tspan><tspan baseline-shift="sub" font-size="11">2</tspan><tspan> → CO</tspan><tspan baseline-shift="sub" font-size="11">2</tspan><tspan> + H</tspan><tspan baseline-shift="sub" font-size="11">2</tspan><tspan>O</tspan></text></svg></div>
+        <div class="visual-card"><h3>3. Giữ nhóm nguyên tử như một khối</h3><svg viewBox="0 0 440 240" role="img" aria-label="Giữ nhóm nguyên tử"><rect x="38" y="72" width="150" height="78" rx="15" fill="#dbeafe"/><text x="113" y="106" text-anchor="middle" font-size="24" font-weight="900"><tspan>SO</tspan><tspan baseline-shift="sub" font-size="16">4</tspan></text><text x="113" y="132" text-anchor="middle">một “khối”</text><line x1="193" y1="112" x2="248" y2="112" stroke="#2563eb" stroke-width="4"/><rect x="253" y="72" width="150" height="78" rx="15" fill="#dcfce7"/><text x="328" y="106" text-anchor="middle" font-size="24" font-weight="900"><tspan>SO</tspan><tspan baseline-shift="sub" font-size="16">4</tspan></text><text x="328" y="132" text-anchor="middle">cân cả cụm</text><text x="220" y="195" text-anchor="middle" font-weight="800">Nếu nhóm giữ nguyên ở hai vế, cân cả nhóm trước.</text></svg></div>
+        <div class="visual-card"><h3>4. Chỉ số trên: điện tích ion</h3><svg viewBox="0 0 440 240" role="img" aria-label="Chỉ số trên điện tích ion"><text x="45" y="80" font-size="30" font-weight="900"><tspan>Na</tspan><tspan baseline-shift="super" font-size="19">+</tspan><tspan>    Fe</tspan><tspan baseline-shift="super" font-size="19">3+</tspan><tspan>    SO</tspan><tspan baseline-shift="sub" font-size="19">4</tspan><tspan baseline-shift="super" font-size="19">2−</tspan></text><text x="45" y="128" font-size="16" font-weight="800">Số nguyên tử → chỉ số dưới</text><text x="45" y="160" font-size="16" font-weight="800">Điện tích / số oxi hóa → chỉ số trên</text><text x="45" y="198" font-size="16">Phản ứng thuận nghịch dùng mũi tên chuẩn: ⇌</text></svg></div>
+        <div class="visual-card"><h3>5. Quy trình Socrates 4 bước</h3><svg viewBox="0 0 440 240" role="img" aria-label="Quy trình bốn bước"><g font-size="13" font-weight="800" text-anchor="middle"><circle cx="65" cy="105" r="42" fill="#dbeafe"/><text x="65" y="101">ĐẾM</text><text x="65" y="119">2 vế</text><circle cx="170" cy="105" r="42" fill="#fef3c7"/><text x="170" y="101">CHỌN</text><text x="170" y="119">mấu chốt</text><circle cx="275" cy="105" r="42" fill="#fee2e2"/><text x="275" y="101">ĐẶT</text><text x="275" y="119">hệ số</text><circle cx="380" cy="105" r="42" fill="#dcfce7"/><text x="380" y="101">KIỂM</text><text x="380" y="119">+ rút gọn</text></g><text x="220" y="190" text-anchor="middle" font-weight="800">Nguyên tố nào đang lệch? Sửa hệ số nào mà không phá phần đã cân?</text></svg></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const EQUATIONS=[{"id":1,"level":1,"skill":"basic","lhs":["H2","O2"],"rhs":["H2O"],"lc":[2,1],"rc":[2]},{"id":2,"level":1,"skill":"basic","lhs":["N2","H2"],"rhs":["NH3"],"lc":[1,3],"rc":[2]},{"id":3,"level":1,"skill":"basic","lhs":["Na","Cl2"],"rhs":["NaCl"],"lc":[2,1],"rc":[2]},{"id":4,"level":1,"skill":"basic","lhs":["Mg","O2"],"rhs":["MgO"],"lc":[2,1],"rc":[2]},{"id":5,"level":1,"skill":"basic","lhs":["Al","O2"],"rhs":["Al2O3"],"lc":[4,3],"rc":[2]},{"id":6,"level":1,"skill":"basic","lhs":["Fe","S"],"rhs":["FeS"],"lc":[1,1],"rc":[1]},{"id":7,"level":1,"skill":"basic","lhs":["Ca","O2"],"rhs":["CaO"],"lc":[2,1],"rc":[2]},{"id":8,"level":1,"skill":"basic","lhs":["K","Br2"],"rhs":["KBr"],"lc":[2,1],"rc":[2]},{"id":9,"level":1,"skill":"basic","lhs":["P","O2"],"rhs":["P2O5"],"lc":[4,5],"rc":[2]},{"id":10,"level":1,"skill":"basic","lhs":["C","O2"],"rhs":["CO2"],"lc":[1,1],"rc":[1]},{"id":11,"level":2,"skill":"decomp","lhs":["KClO3"],"rhs":["KCl","O2"],"lc":[2],"rc":[2,3]},{"id":12,"level":2,"skill":"decomp","lhs":["CaCO3"],"rhs":["CaO","CO2"],"lc":[1],"rc":[1,1]},{"id":13,"level":2,"skill":"decomp","lhs":["H2O2"],"rhs":["H2O","O2"],"lc":[2],"rc":[2,1]},{"id":14,"level":2,"skill":"decomp","lhs":["NaHCO3"],"rhs":["Na2CO3","CO2","H2O"],"lc":[2],"rc":[1,1,1]},{"id":15,"level":2,"skill":"decomp","lhs":["KMnO4"],"rhs":["K2MnO4","MnO2","O2"],"lc":[2],"rc":[1,1,1]},{"id":16,"level":2,"skill":"single","lhs":["Fe","HCl"],"rhs":["FeCl2","H2"],"lc":[1,2],"rc":[1,1]},{"id":17,"level":2,"skill":"single","lhs":["Zn","HCl"],"rhs":["ZnCl2","H2"],"lc":[1,2],"rc":[1,1]},{"id":18,"level":2,"skill":"single","lhs":["Mg","HCl"],"rhs":["MgCl2","H2"],"lc":[1,2],"rc":[1,1]},{"id":19,"level":2,"skill":"single","lhs":["Al","HCl"],"rhs":["AlCl3","H2"],"lc":[2,6],"rc":[2,3]},{"id":20,"level":2,"skill":"single","lhs":["Ca","H2O"],"rhs":["Ca(OH)2","H2"],"lc":[1,2],"rc":[1,1]},{"id":21,"level":3,"skill":"acidbase","lhs":["HCl","NaOH"],"rhs":["NaCl","H2O"],"lc":[1,1],"rc":[1,1]},{"id":22,"level":3,"skill":"acidbase","lhs":["H2SO4","NaOH"],"rhs":["Na2SO4","H2O"],"lc":[1,2],"rc":[1,2]},{"id":23,"level":3,"skill":"acidbase","lhs":["H3PO4","KOH"],"rhs":["K3PO4","H2O"],"lc":[1,3],"rc":[1,3]},{"id":24,"level":3,"skill":"acidbase","lhs":["Ca(OH)2","HCl"],"rhs":["CaCl2","H2O"],"lc":[1,2],"rc":[1,2]},{"id":25,"level":3,"skill":"acidbase","lhs":["Al(OH)3","HCl"],"rhs":["AlCl3","H2O"],"lc":[1,3],"rc":[1,3]},{"id":26,"level":3,"skill":"double","lhs":["AgNO3","NaCl"],"rhs":["AgCl","NaNO3"],"lc":[1,1],"rc":[1,1]},{"id":27,"level":3,"skill":"double","lhs":["BaCl2","Na2SO4"],"rhs":["BaSO4","NaCl"],"lc":[1,1],"rc":[1,2]},{"id":28,"level":3,"skill":"double","lhs":["Pb(NO3)2","KI"],"rhs":["PbI2","KNO3"],"lc":[1,2],"rc":[1,2]},{"id":29,"level":3,"skill":"double","lhs":["CaCl2","Na2CO3"],"rhs":["CaCO3","NaCl"],"lc":[1,1],"rc":[1,2]},{"id":30,"level":3,"skill":"double","lhs":["FeCl3","NaOH"],"rhs":["Fe(OH)3","NaCl"],"lc":[1,3],"rc":[1,3]},{"id":31,"level":4,"skill":"combustion","lhs":["CH4","O2"],"rhs":["CO2","H2O"],"lc":[1,2],"rc":[1,2]},{"id":32,"level":4,"skill":"combustion","lhs":["C2H6","O2"],"rhs":["CO2","H2O"],"lc":[2,7],"rc":[4,6]},{"id":33,"level":4,"skill":"combustion","lhs":["C3H8","O2"],"rhs":["CO2","H2O"],"lc":[1,5],"rc":[3,4]},{"id":34,"level":4,"skill":"combustion","lhs":["C4H10","O2"],"rhs":["CO2","H2O"],"lc":[2,13],"rc":[8,10]},{"id":35,"level":4,"skill":"combustion","lhs":["C2H4","O2"],"rhs":["CO2","H2O"],"lc":[1,3],"rc":[2,2]},{"id":36,"level":4,"skill":"combustion","lhs":["C2H2","O2"],"rhs":["CO2","H2O"],"lc":[2,5],"rc":[4,2]},{"id":37,"level":4,"skill":"combustion","lhs":["C3H6","O2"],"rhs":["CO2","H2O"],"lc":[2,9],"rc":[6,6]},{"id":38,"level":4,"skill":"combustion","lhs":["CH3OH","O2"],"rhs":["CO2","H2O"],"lc":[2,3],"rc":[2,4]},{"id":39,"level":4,"skill":"combustion","lhs":["C2H5OH","O2"],"rhs":["CO2","H2O"],"lc":[1,3],"rc":[2,3]},{"id":40,"level":4,"skill":"combustion","lhs":["C6H12O6","O2"],"rhs":["CO2","H2O"],"lc":[1,6],"rc":[6,6]},{"id":41,"level":5,"skill":"polyatomic","lhs":["Al2(SO4)3","NaOH"],"rhs":["Al(OH)3","Na2SO4"],"lc":[1,6],"rc":[2,3]},{"id":42,"level":5,"skill":"polyatomic","lhs":["Fe2(SO4)3","KOH"],"rhs":["Fe(OH)3","K2SO4"],"lc":[1,6],"rc":[2,3]},{"id":43,"level":5,"skill":"polyatomic","lhs":["Ca3(PO4)2","H2SO4"],"rhs":["CaSO4","H3PO4"],"lc":[1,3],"rc":[3,2]},{"id":44,"level":5,"skill":"polyatomic","lhs":["Na3PO4","MgCl2"],"rhs":["Mg3(PO4)2","NaCl"],"lc":[2,3],"rc":[1,6]},{"id":45,"level":5,"skill":"polyatomic","lhs":["(NH4)2SO4","NaOH"],"rhs":["Na2SO4","NH3","H2O"],"lc":[1,2],"rc":[1,2,2]},{"id":46,"level":5,"skill":"polyatomic","lhs":["NH4Cl","Ca(OH)2"],"rhs":["CaCl2","NH3","H2O"],"lc":[2,1],"rc":[1,2,2]},{"id":47,"level":5,"skill":"polyatomic","lhs":["Al2O3","HCl"],"rhs":["AlCl3","H2O"],"lc":[1,6],"rc":[2,3]},{"id":48,"level":5,"skill":"polyatomic","lhs":["Fe2O3","H2SO4"],"rhs":["Fe2(SO4)3","H2O"],"lc":[1,3],"rc":[1,3]},{"id":49,"level":5,"skill":"polyatomic","lhs":["CuO","HNO3"],"rhs":["Cu(NO3)2","H2O"],"lc":[1,2],"rc":[1,1]},{"id":50,"level":5,"skill":"polyatomic","lhs":["Mg(OH)2","H3PO4"],"rhs":["Mg3(PO4)2","H2O"],"lc":[3,2],"rc":[1,6]},{"id":51,"level":6,"skill":"redox","lhs":["Fe2O3","CO"],"rhs":["Fe","CO2"],"lc":[1,3],"rc":[2,3]},{"id":52,"level":6,"skill":"redox","lhs":["CuO","H2"],"rhs":["Cu","H2O"],"lc":[1,1],"rc":[1,1]},{"id":53,"level":6,"skill":"redox","lhs":["MnO2","HCl"],"rhs":["MnCl2","Cl2","H2O"],"lc":[1,4],"rc":[1,1,2]},{"id":54,"level":6,"skill":"redox","lhs":["KMnO4","HCl"],"rhs":["KCl","MnCl2","Cl2","H2O"],"lc":[2,16],"rc":[2,2,5,8]},{"id":55,"level":6,"skill":"redox","lhs":["K2Cr2O7","HCl"],"rhs":["KCl","CrCl3","Cl2","H2O"],"lc":[1,14],"rc":[2,2,3,7]},{"id":56,"level":6,"skill":"redox","lhs":["FeCl2","Cl2"],"rhs":["FeCl3"],"lc":[2,1],"rc":[2]},{"id":57,"level":6,"skill":"redox","lhs":["SO2","O2"],"rhs":["SO3"],"lc":[2,1],"rc":[2]},{"id":58,"level":6,"skill":"redox","lhs":["NH3","O2"],"rhs":["NO","H2O"],"lc":[4,5],"rc":[4,6]},{"id":59,"level":6,"skill":"redox","lhs":["H2S","O2"],"rhs":["SO2","H2O"],"lc":[2,3],"rc":[2,2]},{"id":60,"level":6,"skill":"redox","lhs":["Cu","HNO3"],"rhs":["Cu(NO3)2","NO2","H2O"],"lc":[1,4],"rc":[1,2,2]},{"id":61,"level":7,"skill":"special","lhs":["P2O5","H2O"],"rhs":["H3PO4"],"lc":[1,3],"rc":[2]},{"id":62,"level":7,"skill":"special","lhs":["Na2O","H2O"],"rhs":["NaOH"],"lc":[1,1],"rc":[2]},{"id":63,"level":7,"skill":"special","lhs":["SO3","H2O"],"rhs":["H2SO4"],"lc":[1,1],"rc":[1]},{"id":64,"level":7,"skill":"special","lhs":["CaO","H2O"],"rhs":["Ca(OH)2"],"lc":[1,1],"rc":[1]},{"id":65,"level":7,"skill":"special","lhs":["Cl2","KOH"],"rhs":["KCl","KClO","H2O"],"lc":[1,2],"rc":[1,1,1]},{"id":66,"level":7,"skill":"special","lhs":["Cl2","KOH"],"rhs":["KCl","KClO3","H2O"],"lc":[3,6],"rc":[5,1,3]},{"id":67,"level":7,"skill":"special","lhs":["Na2O2","H2O"],"rhs":["NaOH","O2"],"lc":[2,2],"rc":[4,1]},{"id":68,"level":7,"skill":"special","lhs":["CO2","NaOH"],"rhs":["Na2CO3","H2O"],"lc":[1,2],"rc":[1,1]},{"id":69,"level":7,"skill":"special","lhs":["CO2","Ca(OH)2"],"rhs":["CaCO3","H2O"],"lc":[1,1],"rc":[1,1]},{"id":70,"level":7,"skill":"special","lhs":["SO2","NaOH"],"rhs":["Na2SO3","H2O"],"lc":[1,2],"rc":[1,1]},{"id":71,"level":8,"skill":"advanced","lhs":["FeS2","O2"],"rhs":["Fe2O3","SO2"],"lc":[4,11],"rc":[2,8]},{"id":72,"level":8,"skill":"advanced","lhs":["NH3","CuO"],"rhs":["N2","Cu","H2O"],"lc":[2,3],"rc":[1,3,3]},{"id":73,"level":8,"skill":"advanced","lhs":["P4","O2"],"rhs":["P2O5"],"lc":[1,5],"rc":[2]},{"id":74,"level":8,"skill":"advanced","lhs":["C12H22O11","O2"],"rhs":["CO2","H2O"],"lc":[1,12],"rc":[12,11]},{"id":75,"level":8,"skill":"advanced","lhs":["C6H6","O2"],"rhs":["CO2","H2O"],"lc":[2,15],"rc":[12,6]},{"id":76,"level":8,"skill":"advanced","lhs":["C7H8","O2"],"rhs":["CO2","H2O"],"lc":[1,9],"rc":[7,4]},{"id":77,"level":8,"skill":"advanced","lhs":["C8H18","O2"],"rhs":["CO2","H2O"],"lc":[2,25],"rc":[16,18]},{"id":78,"level":8,"skill":"advanced","lhs":["Al","Fe2O3"],"rhs":["Al2O3","Fe"],"lc":[2,1],"rc":[1,2]},{"id":79,"level":8,"skill":"advanced","lhs":["Na","H2O"],"rhs":["NaOH","H2"],"lc":[2,2],"rc":[2,1]},{"id":80,"level":8,"skill":"advanced","lhs":["CaC2","H2O"],"rhs":["C2H2","Ca(OH)2"],"lc":[1,2],"rc":[1,1]}];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const SKILL_NAMES={basic:'Hệ số cơ bản',decomp:'Phân hủy',single:'Phản ứng thế',acidbase:'Axit–bazơ',double:'Trao đổi',combustion:'Phản ứng cháy',polyatomic:'Nhóm nguyên tử',redox:'Oxi hóa–khử',special:'Dạng đặc biệt',advanced:'Tổng hợp khó'};
+const LEVEL_NAMES={1:'Hệ số cơ bản',2:'Phân hủy & thế',3:'Axit–bazơ & trao đổi',4:'Phản ứng cháy',5:'Nhóm nguyên tử',6:'Oxi hóa–khử',7:'Dạng đặc biệt',8:'Tổng hợp khó'};
+const WEEK=[
+ {date:'2026-08-28',title:'Nền tảng',target:60,task:'60 câu đầu: hệ số cơ bản + phân hủy. Mục tiêu ≥80%.'},
+ {date:'2026-08-29',title:'Thế & trao đổi',target:60,task:'60 câu: phản ứng thế, axit–bazơ, trao đổi.'},
+ {date:'2026-08-30',title:'Phản ứng cháy',target:60,task:'60 câu cháy. Tập quy trình C → H → O.'},
+ {date:'2026-08-31',title:'Nhóm nguyên tử',target:60,task:'60 câu có <span class="chem">SO<sub>4</sub></span>, <span class="chem">NO<sub>3</sub></span>, OH, <span class="chem">PO<sub>4</sub></span>. Giữ nhóm nguyên tử nếu không đổi.'},
+ {date:'2026-09-01',title:'Oxi hóa–khử',target:60,task:'60 câu oxi hóa–khử và nhiều chất.'},
+ {date:'2026-09-02',title:'Tổng hợp',target:100,task:'100 câu hỗn hợp, làm sạch toàn bộ sổ câu sai.'},
+ {date:'2026-09-03',title:'Khóa kiến thức',target:80,task:'Thi 2 đề × 40 câu, mỗi đề mục tiêu ≥90%.'}
+];
+
+function chem(raw){let s=String(raw).replace(/<=>|⇌/g,'⇌').replace(/->|→/g,'→'),charge='';const cm=s.match(/\^(\d*)([+\-−])$/);if(cm){charge=(cm[1]||'')+cm[2].replace('-','−');s=s.slice(0,cm.index)}let out=s.replace(/([A-Za-z\)])(\d+)/g,(m,a,n)=>a+'<sub>'+n+'</sub>');if(charge)out+='<sup>'+charge+'</sup>';return '<span class="chem">'+out+'</span>'}
+function coeffEq(e,coefs){let i=0;const side=arr=>arr.map(f=>{const c=coefs[i++];return `<span class="coef">${c===1?'':c}</span>${chem(f)}`}).join(' + ');return `<span class="eq">${side(e.lhs)} → ${side(e.rhs)}</span>`}
+function coeffs(e){return [...e.lc,...e.rc]}
+function sumCoeffs(e){return coeffs(e).reduce((a,b)=>a+b,0)}
+function gcd(a,b){while(b)[a,b]=[b,a%b];return a}
+function shuffled(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
+function options(correct,pool){const arr=[String(correct)];for(const x of shuffled(pool.map(String))){if(arr.length>=4)break;if(!arr.includes(x))arr.push(x)}return shuffled(arr)}
+function tupleStr(a){return '('+a.join(' : ')+')'}
+
+const QUESTIONS=[];
+EQUATIONS.forEach(e=>{
+  const cs=coeffs(e), formulas=[...e.lhs,...e.rhs];
+  const baseHint='Hãy đếm số nguyên tử ở hai vế. Chỉ thay hệ số, không được sửa chỉ số.';
+  // Type 1: full tuple
+  const tuple=tupleStr(cs);
+  const tuplePool=[
+    tupleStr(cs.map((x,i)=>i===0?x+1:x)),
+    tupleStr(cs.map((x,i)=>i===cs.length-1?x+1:x)),
+    tupleStr(cs.map((x,i)=>i===1?Math.max(1,x-1):x)),
+    tupleStr(cs.map(x=>x*2))
+  ];
+  QUESTIONS.push({id:QUESTIONS.length+1,level:e.level,skill:e.skill,type:'tuple',eq:e,
+    q:`Bộ hệ số nguyên tối giản cân bằng phản ứng <b>${chem(e.lhs.join(' + '))} → ${chem(e.rhs.join(' + '))}</b> là?`,
+    a:tuple,opts:options(tuple,tuplePool),hint:baseHint,
+    exp:`Bộ hệ số đúng là ${tuple}. Phương trình: ${coeffEq(e,cs)}`,
+    ask:'Nếu nhân tất cả hệ số lên 2 lần thì phương trình còn cân bằng không? Vì sao vẫn chưa phải bộ tối giản?'});
+  // Type 2: coefficient of one substance
+  const pos=e.id % formulas.length, target=formulas[pos], ans=cs[pos];
+  QUESTIONS.push({id:QUESTIONS.length+1,level:e.level,skill:e.skill,type:'coefficient',eq:e,
+    q:`Sau khi cân bằng tối giản, hệ số của <b>${chem(target)}</b> bằng bao nhiêu?`,
+    a:String(ans),opts:options(ans,[1,2,3,4,5,6,7,8,10,12,14,16,25]),hint:baseHint,
+    exp:`Trong phương trình ${coeffEq(e,cs)}, hệ số của ${chem(target)} là <b>${ans}</b>.`,
+    ask:'Em có thể kiểm tra hệ số này bằng cách đếm nguyên tố nào trước?'});
+  // Type 3: sum coefficients
+  const sm=sumCoeffs(e);
+  QUESTIONS.push({id:QUESTIONS.length+1,level:e.level,skill:e.skill,type:'sum',eq:e,
+    q:`Tổng các hệ số nguyên tối giản của phản ứng <b>${chem(e.lhs.join(' + '))} → ${chem(e.rhs.join(' + '))}</b> bằng?`,
+    a:String(sm),opts:options(sm,[sm-3,sm-2,sm-1,sm+1,sm+2,sm+3,sm+4].filter(x=>x>0)),hint:baseHint,
+    exp:`Cân bằng được ${coeffEq(e,cs)} nên tổng hệ số = <b>${sm}</b>.`,
+    ask:'Vì sao phải tính tổng sau khi đã rút gọn hệ số về tối giản?'});
+  // Type 4: missing coefficient in a partially written balanced equation
+  const miss=(e.id*3)%cs.length;
+  let j=0;const sideMiss=arr=>arr.map(f=>{const c=cs[j];const out=j===miss?'□':(c===1?'':c);j++;return `<span class="coef">${out}</span>${chem(f)}`}).join(' + ');
+  const shown=`${sideMiss(e.lhs)} → ${sideMiss(e.rhs)}`;
+  QUESTIONS.push({id:QUESTIONS.length+1,level:e.level,skill:e.skill,type:'missing',eq:e,
+    q:`Điền hệ số còn thiếu: <b>${shown}</b>`,
+    a:String(cs[miss]),opts:options(cs[miss],[1,2,3,4,5,6,7,8,10,12,14,16]),hint:'Dùng các hệ số đã cho để suy ngược ô trống, rồi kiểm tra số nguyên tử hai vế.',
+    exp:`Hệ số còn thiếu là <b>${cs[miss]}</b>. Phương trình hoàn chỉnh: ${coeffEq(e,cs)}`,
+    ask:'Nếu ô trống sai 1 đơn vị, nguyên tố nào sẽ mất cân bằng đầu tiên?'});
+  // Type 5: choose correctly balanced displayed equation
+  const variants=[cs,
+    cs.map((x,i)=>i===0?x+1:x),
+    cs.map((x,i)=>i===cs.length-1?x+1:x),
+    cs.map((x,i)=>i===Math.min(1,cs.length-1)?x+1:x)];
+  const rendered=variants.map(v=>coeffEq(e,v));
+  QUESTIONS.push({id:QUESTIONS.length+1,level:e.level,skill:e.skill,type:'identify',eq:e,
+    q:`Phương trình nào dưới đây được cân bằng đúng và tối giản?`,
+    a:rendered[0],opts:shuffled(rendered),hint:'Đếm một nguyên tố dễ trước, loại nhanh phương án sai; sau đó kiểm tra toàn bộ nguyên tố.',
+    exp:`Phương án đúng là ${rendered[0]}`,
+    ask:'Em đã loại phương án sai bằng nguyên tố nào nhanh nhất?'});
+});
+if(QUESTIONS.length!==400) throw new Error('Question bank != 400');
+
+function blankDaily(){return{done:0,correct:0,wrong:0,practice:0,examQuestions:0,examCorrect:0,exams:0,best:0,studySeconds:0,memorized:false,skills:{},reviewSet:[],reviewDone:0,reviewCorrect:0}}
+function blankState(){return{done:0,correct:0,wrong:{},levelStats:Object.fromEntries([1,2,3,4,5,6,7,8].map(n=>[n,{d:0,c:0}])),daily:{},teacher:{misses:{},lockedSkill:null,startedAt:0,completed:0},examRoom:{results:{},sets:{}}}}
+function load(){try{const b=blankState(),r=JSON.parse(localStorage.getItem('balanceMaster10')||'{}');Object.assign(b,r);b.levelStats=Object.assign(blankState().levelStats,r.levelStats||{});b.teacher=Object.assign(blankState().teacher,r.teacher||{});b.teacher.misses=Object.assign({},r.teacher?.misses||{});b.examRoom=Object.assign(blankState().examRoom,r.examRoom||{});b.examRoom.results=Object.assign({},r.examRoom?.results||{});b.examRoom.sets=Object.assign({},r.examRoom?.sets||{});b.daily=r.daily&&typeof r.daily==='object'?r.daily:{};for(const k of Object.keys(b.daily))b.daily[k]=Object.assign(blankDaily(),b.daily[k]||{});return b}catch{return blankState()}}
+let state=load();
+function save(){localStorage.setItem('balanceMaster10',JSON.stringify(state));updateTop();renderRoadmap();renderDaily();renderExamRoom();renderWrong()}
+function dayKey(){const p=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Bangkok',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const g=t=>p.find(x=>x.type===t).value;return `${g('year')}-${g('month')}-${g('day')}`}
+function daily(key=dayKey()){if(!state.daily[key])state.daily[key]=blankDaily();else state.daily[key]=Object.assign(blankDaily(),state.daily[key]);return state.daily[key]}
+let lastStudyTick=Date.now();
+function skillGroup(skill){if(skill==='basic')return'foundation';if(skill==='decomp'||skill==='single')return'decompSingle';if(skill==='acidbase'||skill==='double')return'acidExchange';if(skill==='combustion')return'combustion';if(skill==='polyatomic')return'polyatomic';if(skill==='redox')return'redox';if(skill==='special')return'special';return'advanced'}
+function trackStudy(){const now=Date.now(),delta=Math.max(0,Math.min(180,Math.round((now-lastStudyTick)/1000)));daily().studySeconds+=delta;lastStudyTick=now}
+function record(q,ok,chosen,mode='practice',persist=true){state.done++;state.levelStats[q.level].d++;const d=daily();d.done++;if(mode==='exam'){d.examQuestions++;if(ok)d.examCorrect++}else{d.practice++;trackStudy()}const g=skillGroup(q.skill);if(!d.skills[g])d.skills[g]={done:0,correct:0,wrong:0};d.skills[g].done++;if(ok){state.correct++;state.levelStats[q.level].c++;d.correct++;d.skills[g].correct++;delete state.wrong[q.id]}else{d.wrong++;d.skills[g].wrong++;state.wrong[q.id]={id:q.id,chosen,time:Date.now()}}if(persist)save()}
+function updateTop(){$('#topDone').textContent=`Đã làm: ${state.done}`;$('#topAcc').textContent=`Chính xác: ${state.done?Math.round(state.correct/state.done*100):0}%`;$('#topWrong').textContent=state.teacher.lockedSkill?`🔒 Teacher: ${SKILL_NAMES[state.teacher.lockedSkill]}`:`Sổ sai: ${Object.keys(state.wrong).length}`}
+function showView(id){$$('.view').forEach(v=>v.classList.toggle('active',v.id===id));$$('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view===id));if(id==='roadmap')renderRoadmap();if(id==='daily')renderDaily();if(id==='exam')renderExamRoom();if(id==='wrong')renderWrong()}
+$$('.tab').forEach(t=>t.addEventListener('click',()=>showView(t.dataset.view)));
+
+const levelInfo={
+1:['Hệ số cơ bản','Phương trình 2–3 chất, hệ số nhỏ'],
+2:['Phân hủy & thế','Một chất phân hủy hoặc kim loại thế H'],
+3:['Axit–bazơ & trao đổi','Trung hòa, kết tủa, trao đổi ion'],
+4:['Phản ứng cháy','Hydrocarbon, alcohol, glucose'],
+5:['Nhóm nguyên tử','Giữ <span class="chem">SO<sub>4</sub></span>, <span class="chem">NO<sub>3</sub></span>, OH, <span class="chem">PO<sub>4</sub></span> khi phù hợp'],
+6:['Oxi hóa–khử','Nhiều chất, hệ số lớn hơn'],
+7:['Dạng đặc biệt','<span class="chem">Cl<sub>2</sub></span> + KOH, peroxide, oxit axit/bazơ'],
+8:['Tổng hợp khó','<span class="chem">FeS<sub>2</sub></span>, hydrocarbon lớn, nhiều hệ số']
+};
+function renderRoadmap(){const box=$('#levels');box.innerHTML='';let td=0;for(let n=1;n<=8;n++){const s=state.levelStats[n]||{d:0,c:0},acc=s.d?Math.round(s.c/s.d*100):0;td+=Math.min(50,s.d);const d=document.createElement('div');d.className='level';d.innerHTML=`<h3>Chặng ${n} — ${levelInfo[n][0]}</h3><p class="small muted">${levelInfo[n][1]}</p><div class="progress"><div style="width:${Math.min(100,s.d/50*100)}%"></div></div><p class="small">Đã làm <b>${Math.min(50,s.d)}/50</b> • Chính xác <b>${acc}%</b></p><button class="btn primary startLevel" data-n="${n}">Luyện chặng ${n}</button>`;box.appendChild(d)}$('#roadProgress').style.width=`${td/4}%`;$('#roadText').textContent=`${td} / 400`;$$('.startLevel').forEach(b=>b.addEventListener('click',()=>{practice.level=Number(b.dataset.n);$('#practiceLevel').value=b.dataset.n;practice.index=0;showView('practice');renderPractice()}))}
+
+let practice={level:1,index:0,answered:false,streak:0};
+function levelQs(){return QUESTIONS.filter(q=>q.level===practice.level)}
+function renderPractice(){if(state.teacher.lockedSkill){openTeacher(state.teacher.lockedSkill);return}const arr=levelQs(),q=arr[practice.index%arr.length];practice.answered=false;$('#teacherGate').classList.add('hidden');$('#practiceWorkspace').classList.remove('hidden');$('#practiceCounter').textContent=`Câu ${practice.index+1}/50`;$('#practiceProgress').style.width=`${practice.index/50*100}%`;$('#practiceQuestion').innerHTML=q.q;const c=$('#practiceChoices');c.innerHTML='';q.opts.forEach(o=>{const b=document.createElement('button');b.className='choice';b.dataset.value=o;b.innerHTML=o;b.addEventListener('click',()=>answerPractice(q,o,b));c.appendChild(b)});$('#hintBox').classList.add('hidden');$('#hintBox').textContent=q.hint;$('#practiceFeedback').className='hidden';$('#nextPractice').disabled=true;renderPracticeStats()}
+function renderPracticeStats(){const s=state.levelStats[practice.level],acc=s.d?Math.round(s.c/s.d*100):0;$('#pDone').textContent=s.d;$('#pCorrect').textContent=s.c;$('#pAcc').textContent=acc+'%';$('#pStreak').textContent=practice.streak}
+function answerPractice(q,o,b){if(practice.answered||state.teacher.lockedSkill)return;practice.answered=true;const ok=o===q.a;record(q,ok,o);practice.streak=ok?practice.streak+1:0;$$('#practiceChoices .choice').forEach(x=>{x.disabled=true;if(x.dataset.value===q.a)x.classList.add('correct')});if(!ok)b.classList.add('wrong');const fb=$('#practiceFeedback');fb.className='feedback '+(ok?'ok':'bad');fb.innerHTML=`<b>${ok?'✅ Chính xác':'❌ Chưa đúng'}</b><div style="margin-top:7px">${q.exp}</div><div class="socrates"><b>Tự hỏi:</b> ${q.ask}</div>`;let locked=false;if(!ok)locked=registerMistake(q);$('#nextPractice').disabled=locked;renderPracticeStats()}
+$('#practiceLevel').addEventListener('change',e=>{if(state.teacher.lockedSkill)return openTeacher(state.teacher.lockedSkill);practice.level=Number(e.target.value);practice.index=0;renderPractice()});
+$('#hintBtn').addEventListener('click',()=>$('#hintBox').classList.toggle('hidden'));
+$('#nextPractice').addEventListener('click',()=>{if(state.teacher.lockedSkill)return openTeacher(state.teacher.lockedSkill);practice.index=(practice.index+1)%50;renderPractice()});
+
+const LESSONS={
+basic:['Cân bằng = bảo toàn số nguyên tử',['Đếm nguyên tử','Chọn nguyên tố dễ','Đặt hệ số','Rút gọn','Kiểm tra']],
+decomp:['Phân hủy: nhìn chất xuất hiện nhiều sản phẩm',['Đếm từng nguyên tố','Cân bằng nguyên tố hiếm','Xử lý <span class="chem">O<sub>2</sub></span> cuối','Rút gọn','Kiểm tra']],
+single:['Phản ứng thế: giữ nguyên công thức chất',['Nhìn kim loại','Cân anion','Cân <span class="chem">H<sub>2</sub></span>','Rút gọn','Kiểm tra']],
+acidbase:['Axit–bazơ: ưu tiên H và nhóm OH',['Giữ gốc axit','Cân kim loại','Cân H/O','Rút gọn','Kiểm tra']],
+double:['Trao đổi: xem nhóm nguyên tử như một khối',['Nhận nhóm giữ nguyên','Cân cation','Cân anion','Rút gọn','Kiểm tra']],
+combustion:['Phản ứng cháy: C → H → O',['Cân C','Cân H','Đếm O sản phẩm','Cân <span class="chem">O<sub>2</sub></span>','Khử phân số']],
+polyatomic:['Nhóm nguyên tử: giữ nguyên cả cụm khi không đổi',['Khoanh nhóm','Cân nhóm trước','Cân nguyên tố còn lại','Rút gọn','Kiểm tra']],
+redox:['Oxi hóa–khử: hệ số lớn, kiểm tra chặt',['Cân nguyên tố kim loại','Cân nhóm/halogen','Cân H','Cân O','Kiểm tra toàn bộ']],
+special:['Dạng đặc biệt: không dùng máy móc một thứ tự',['Tìm cấu trúc lặp','Giữ nhóm phù hợp','Cân chất đặc biệt','Rút gọn','Kiểm tra']],
+advanced:['Tổng hợp khó: chia bài thành từng lớp',['Chọn nguyên tố mấu chốt','Cân C/H hoặc kim loại','Cân O cuối','Khử phân số','Rút gọn']]
+};
+let teacher={step:0,timer:null,qs:[],answers:[]};
+function teacherSvg(skill){if(skill==='combustion')return `<svg viewBox="0 0 430 260" class="teacher-svg"><text x="215" y="35" text-anchor="middle" font-size="18" font-weight="900">PHẢN ỨNG CHÁY</text><rect x="35" y="85" width="95" height="60" rx="14" fill="#dbeafe"/><text x="82" y="120" text-anchor="middle" font-weight="800">1. C</text><line x1="135" y1="115" x2="175" y2="115" stroke="#2563eb" stroke-width="4"/><rect x="180" y="85" width="95" height="60" rx="14" fill="#fef3c7"/><text x="227" y="120" text-anchor="middle" font-weight="800">2. H</text><line x1="280" y1="115" x2="320" y2="115" stroke="#2563eb" stroke-width="4"/><rect x="325" y="85" width="70" height="60" rx="14" fill="#fee2e2"/><text x="360" y="120" text-anchor="middle" font-weight="800">3. O</text><text x="215" y="205" text-anchor="middle" font-size="16" font-weight="800"><tspan>Hydrocarbon + O</tspan><tspan baseline-shift="sub" font-size="11">2</tspan><tspan> → CO</tspan><tspan baseline-shift="sub" font-size="11">2</tspan><tspan> + H</tspan><tspan baseline-shift="sub" font-size="11">2</tspan><tspan>O</tspan></text></svg>`;
+if(skill==='polyatomic'||skill==='double'||skill==='acidbase')return `<svg viewBox="0 0 430 260" class="teacher-svg"><text x="215" y="35" text-anchor="middle" font-size="18" font-weight="900">XEM NHÓM NGUYÊN TỬ NHƯ “MỘT KHỐI”</text><rect x="35" y="90" width="145" height="70" rx="14" fill="#dbeafe"/><text x="107" y="120" text-anchor="middle" font-weight="800"><tspan>SO</tspan><tspan baseline-shift="sub" font-size="11">4</tspan></text><text x="107" y="143" text-anchor="middle">giữ nguyên</text><line x1="185" y1="125" x2="245" y2="125" stroke="#2563eb" stroke-width="4"/><rect x="250" y="90" width="145" height="70" rx="14" fill="#dcfce7"/><text x="322" y="120" text-anchor="middle" font-weight="800"><tspan>SO</tspan><tspan baseline-shift="sub" font-size="11">4</tspan></text><text x="322" y="143" text-anchor="middle">cân cả cụm</text></svg>`;
+return `<svg viewBox="0 0 430 260" class="teacher-svg"><text x="215" y="35" text-anchor="middle" font-size="18" font-weight="900">CHỈ ĐỔI HỆ SỐ — KHÔNG ĐỔI CHỈ SỐ</text><text x="55" y="115" font-size="32" font-weight="900"><tspan>2H</tspan><tspan baseline-shift="sub" font-size="21">2</tspan><tspan> + O</tspan><tspan baseline-shift="sub" font-size="21">2</tspan><tspan> → 2H</tspan><tspan baseline-shift="sub" font-size="21">2</tspan><tspan>O</tspan></text><line x1="55" y1="130" x2="78" y2="130" stroke="#2563eb" stroke-width="5"/><text x="55" y="165" fill="#2563eb" font-weight="800">Hệ số: được thay đổi</text><text x="230" y="165" fill="#b91c1c" font-weight="800">Chỉ số: không sửa</text></svg>`}
+function registerMistake(q){const s=q.skill;state.teacher.misses[s]=(state.teacher.misses[s]||0)+1;if(!state.teacher.lockedSkill&&state.teacher.misses[s]>=3){state.teacher.lockedSkill=s;state.teacher.startedAt=Date.now();save();openTeacher(s);return true}save();return false}
+function remain(){return Math.max(0,300000-(Date.now()-state.teacher.startedAt))}
+function openTeacher(skill){$('#teacherGate').classList.remove('hidden');$('#practiceWorkspace').classList.add('hidden');teacher.step=0;renderTeacher(skill);clearInterval(teacher.timer);teacher.timer=setInterval(updateTeacherTimer,500);updateTeacherTimer()}
+function renderTeacher(skill){const [title,steps]=LESSONS[skill]||LESSONS.basic;$('#teacherTitle').textContent='Mini-lesson: '+title;$('#teacherSubtitle').textContent=`Dạng đang khóa: ${SKILL_NAMES[skill]} • 3 lỗi cùng dạng.`;$('#teacherSteps').innerHTML=steps.map((x,i)=>`<div class="teacher-step ${i<teacher.step?'done':i===teacher.step?'active':''}">${i+1}. ${x}</div>`).join('');$('#teacherLesson').innerHTML=`<h3>${steps[teacher.step]}</h3><div class="lesson-note">Quy tắc: <b>không đổi chỉ số</b>; chỉ đặt hệ số và luôn kiểm tra lại hai vế.</div>`;$('#teacherAsk').innerHTML=`<b>❓ Socrates:</b> Nếu em thay chỉ số trong công thức để “cho bằng”, em có còn đang cân bằng cùng một chất không?`;$('#teacherSvg').innerHTML=teacherSvg(skill);$('#teacherPrev').disabled=teacher.step===0;$('#teacherNext').textContent=teacher.step===4?'Đến checkpoint →':'Bước tiếp →'}
+function updateTeacherTimer(){const ms=remain(),sec=Math.ceil(ms/1000),m=Math.floor(sec/60),s=sec%60;$('#teacherTimer').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;if(ms<=0){clearInterval(teacher.timer);teacher.timer=null;if(teacher.step===4)showCheckpoint()}}
+$('#teacherPrev').addEventListener('click',()=>{teacher.step=Math.max(0,teacher.step-1);renderTeacher(state.teacher.lockedSkill)});
+$('#teacherNext').addEventListener('click',()=>{if(teacher.step<4){teacher.step++;renderTeacher(state.teacher.lockedSkill)}else showCheckpoint()});
+function showCheckpoint(){const box=$('#teacherCheckpoint');box.classList.remove('hidden');if(remain()>0){box.innerHTML='<div class="lock-note">⏳ Chưa đủ 5 phút.</div>';return}const skill=state.teacher.lockedSkill;teacher.qs=shuffled(QUESTIONS.filter(q=>q.skill===skill)).slice(0,3);teacher.answers=[null,null,null];box.innerHTML=`<h3>Checkpoint mở khóa</h3><p class="muted">Đạt ít nhất 2/3.</p><div id="checkQs"></div><button class="btn primary" id="gradeCheck" disabled>Chấm checkpoint</button>`;const list=$('#checkQs');teacher.qs.forEach((q,i)=>{const w=document.createElement('div');w.className='card';w.style.margin='8px 0';w.innerHTML=`<b>${i+1}. ${q.q}</b><div class="choices" style="margin-top:8px"></div>`;const c=w.querySelector('.choices');q.opts.forEach(o=>{const b=document.createElement('button');b.className='choice';b.innerHTML=o;b.addEventListener('click',()=>{teacher.answers[i]=o;[...c.children].forEach(x=>x.style.outline='');b.style.outline='3px solid var(--accent)';$('#gradeCheck').disabled=teacher.answers.some(x=>x===null)});c.appendChild(b)});list.appendChild(w)});$('#gradeCheck').addEventListener('click',gradeCheckpoint)}
+function gradeCheckpoint(){const c=teacher.qs.reduce((n,q,i)=>n+(teacher.answers[i]===q.a?1:0),0),box=$('#teacherCheckpoint'),skill=state.teacher.lockedSkill;if(c>=2){state.teacher.misses[skill]=0;state.teacher.lockedSkill=null;state.teacher.startedAt=0;state.teacher.completed++;save();box.innerHTML=`<div class="feedback ok"><h3>🎓 Mở khóa: ${c}/3</h3><button class="btn primary" id="resume">Quay lại luyện tập</button></div>`;$('#resume').addEventListener('click',()=>{clearInterval(teacher.timer);box.classList.add('hidden');renderPractice()})}else{state.teacher.startedAt=Date.now();save();box.innerHTML=`<div class="feedback bad"><h3>🔁 ${c}/3 — học lại 5 phút</h3><button class="btn primary" id="retryLesson">Học lại</button></div>`;$('#retryLesson').addEventListener('click',()=>{teacher.step=0;box.classList.add('hidden');renderTeacher(skill);clearInterval(teacher.timer);teacher.timer=setInterval(updateTeacherTimer,500);updateTeacherTimer()})}}
+
+const SKILL_GROUPS=[['foundation','Hệ số cơ bản'],['decompSingle','Phân hủy & thế'],['acidExchange','Axit–bazơ & trao đổi'],['combustion','Phản ứng cháy'],['polyatomic','Nhóm nguyên tử'],['redox','Oxi hóa–khử'],['special','Dạng đặc biệt'],['advanced','Tổng hợp khó']];
+function fmtTime(sec){const m=Math.round((Number(sec)||0)/60);return m<1&&sec>0?'<1 phút':m+' phút'}
+function gradeDayObj(d,target){const acc=d.done?d.correct/d.done*100:0,comp=Math.min(100,(d.practice+d.examQuestions)/Math.max(1,target)*100),exam=d.exams?Math.min(100,d.best/90*100):0;let score=acc*.7+comp*.25+exam*.05;if(d.done<10)score=Math.min(score,64);return score>=85?{grade:'A',score:Math.round(score),text:'Vững — có thể tăng độ khó.'}:score>=65?{grade:'B',score:Math.round(score),text:'Khá — cần vá 1–2 dạng yếu.'}:{grade:'C',score:Math.round(score),text:'Chưa vững — cần ôn nền tảng trước khi tăng khó.'}}
+function skillStats(date){const d=Object.assign(blankDaily(),state.daily[date]||{}),out={};for(const [k] of SKILL_GROUPS){const s=Object.assign({done:0,correct:0,wrong:0},d.skills?.[k]||{});out[k]={...s,acc:s.done?Math.round(s.correct/s.done*100):0}}return out}
+function weakGroups(date){return Object.entries(skillStats(date)).filter(([,s])=>s.done>0).sort((a,b)=>(a[1].acc-(a[1].done<5?7:0))-(b[1].acc-(b[1].done<5?7:0))||b[1].wrong-a[1].wrong)}
+function groupName(k){return SKILL_GROUPS.find(x=>x[0]===k)?.[1]||k}
+function groupQuestions(k){return QUESTIONS.filter(q=>skillGroup(q.skill)===k)}
+function buildReviewSet(date,force=false){const d=daily(date);if(d.reviewSet?.length&&!force)return d.reviewSet;const weak=weakGroups(date).slice(0,2).map(x=>x[0]);const wrong=Object.keys(state.wrong).map(Number).map(id=>QUESTIONS.find(q=>q.id===id)).filter(Boolean);let pool=[...wrong];weak.forEach(k=>pool.push(...groupQuestions(k)));pool.push(...QUESTIONS);const seen=new Set(),unique=[];for(const q of pool){if(!seen.has(q.id)){seen.add(q.id);unique.push(q)}}d.reviewSet=shuffled(unique).slice(0,20).map(q=>q.id);d.reviewDone=0;d.reviewCorrect=0;return d.reviewSet}
+function tomorrowPlan(date){const d=Object.assign(blankDaily(),state.daily[date]||{}),p=WEEK.find(x=>x.date===date),g=gradeDayObj(d,p?.target||60),w=weakGroups(date);if(!w.length)return'Chưa đủ dữ liệu. Hãy làm ít nhất 10 câu để app tìm đúng điểm yếu.';const a=w[0],b=w[1];return`Xếp loại <b>${g.grade}</b>. Ngày mai ưu tiên <b>${groupName(a[0])}</b> (${a[1].acc}%)${b?` và <b>${groupName(b[0])}</b> (${b[1].acc}%)`:''}. Làm bộ ôn thích nghi trước khi vào bài mới.`}
+function drawSkillRadar(date){const stats=skillStats(date),cx=200,cy=165,R=115,n=SKILL_GROUPS.length,ns='http://www.w3.org/2000/svg';const pts=r=>SKILL_GROUPS.map((_,i)=>{const a=-Math.PI/2+i*2*Math.PI/n;return[cx+Math.cos(a)*r,cy+Math.sin(a)*r]});const poly=a=>a.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ');$('#radarGrid').innerHTML='';$('#radarAxes').innerHTML='';$('#radarDots').innerHTML='';$('#radarLabels').innerHTML='';[.25,.5,.75,1].forEach(fr=>{const p=document.createElementNS(ns,'polygon');p.setAttribute('points',poly(pts(R*fr)));p.setAttribute('fill','none');p.setAttribute('stroke','#cbd5e1');$('#radarGrid').appendChild(p)});const area=[];SKILL_GROUPS.forEach(([k,label],i)=>{const a=-Math.PI/2+i*2*Math.PI/n,x=cx+Math.cos(a)*R,y=cy+Math.sin(a)*R;const l=document.createElementNS(ns,'line');l.setAttribute('x1',cx);l.setAttribute('y1',cy);l.setAttribute('x2',x);l.setAttribute('y2',y);l.setAttribute('stroke','#cbd5e1');$('#radarAxes').appendChild(l);const val=stats[k].done?stats[k].acc:0,rr=R*val/100,px=cx+Math.cos(a)*rr,py=cy+Math.sin(a)*rr;area.push([px,py]);const dot=document.createElementNS(ns,'circle');dot.setAttribute('cx',px);dot.setAttribute('cy',py);dot.setAttribute('r','4');dot.setAttribute('fill','#2563eb');$('#radarDots').appendChild(dot);const lx=cx+Math.cos(a)*(R+28),ly=cy+Math.sin(a)*(R+28);const t=document.createElementNS(ns,'text');t.setAttribute('x',lx);t.setAttribute('y',ly);t.setAttribute('text-anchor',Math.abs(Math.cos(a))<.25?'middle':Math.cos(a)>0?'start':'end');t.setAttribute('class','radar-label');t.textContent=label;$('#radarLabels').appendChild(t);const v=document.createElementNS(ns,'text');v.setAttribute('x',lx);v.setAttribute('y',ly+12);v.setAttribute('text-anchor',t.getAttribute('text-anchor'));v.setAttribute('class','radar-value');v.textContent=stats[k].done?val+'%':'—';$('#radarLabels').appendChild(v)});$('#radarArea').setAttribute('points',poly(area))}
+let reviewSession={ids:[],index:0,correct:0,locked:false};
+function renderReviewPreview(date){const ids=buildReviewSet(date,false);$('#reviewCount').textContent=ids.length+' câu';const qs=ids.slice(0,5).map(id=>QUESTIONS.find(q=>q.id===id)).filter(Boolean);$('#reviewPreview').innerHTML=qs.map((q,i)=>`<div class="review-item"><div class="small muted">Câu ${i+1} • ${groupName(skillGroup(q.skill))}</div><b>${q.q}</b></div>`).join('')}
+function startReviewSession(){const ids=buildReviewSet(dayKey(),false);reviewSession={ids:[...ids],index:0,correct:0,locked:false};renderReviewQ()}
+function renderReviewQ(){const box=$('#reviewRunner');if(reviewSession.index>=reviewSession.ids.length){const pct=reviewSession.ids.length?Math.round(reviewSession.correct/reviewSession.ids.length*100):0;const d=daily();d.reviewDone=reviewSession.ids.length;d.reviewCorrect=reviewSession.correct;save();box.innerHTML=`<div class="feedback ${pct>=80?'ok':'bad'}"><h3>Hoàn thành bài ôn: ${reviewSession.correct}/${reviewSession.ids.length} — ${pct}%</h3><p>${pct>=80?'Có thể sang bài mới.':'Nên tạo thêm một bộ ôn trước khi tăng độ khó.'}</p></div>`;return}const q=QUESTIONS.find(x=>x.id===reviewSession.ids[reviewSession.index]);reviewSession.locked=false;box.innerHTML=`<div class="review-q" id="activeReview"><div class="small muted">Câu ${reviewSession.index+1}/${reviewSession.ids.length} • ${groupName(skillGroup(q.skill))}</div><h3>${q.q}</h3><div class="choices" id="reviewOptions"></div><div id="reviewFeedback"></div></div>`;const opts=$('#reviewOptions');q.opts.forEach(o=>{const b=document.createElement('button');b.className='choice';b.dataset.value=o;b.innerHTML=o;b.addEventListener('click',()=>{if(reviewSession.locked)return;reviewSession.locked=true;const ok=o===q.a;if(ok)reviewSession.correct++;const card=$('#activeReview');card.classList.add(ok?'correct':'wrong');[...opts.children].forEach(x=>x.disabled=true);$('#reviewFeedback').innerHTML=`<div class="feedback ${ok?'ok':'bad'}"><b>${ok?'✅ Đúng':'❌ Chưa đúng'}</b><div>${q.exp}</div><div class="socrates"><b>Socrates:</b> ${q.ask}</div></div>`;record(q,ok,o,'practice');const nb=document.createElement('button');nb.className='btn primary';nb.textContent='Câu tiếp →';nb.style.marginTop='8px';nb.addEventListener('click',()=>{reviewSession.index++;renderReviewQ()});card.appendChild(nb)});opts.appendChild(b)})}
+function renderDaily(){const cards=$('#dailyCards'),body=$('#dailyBody'),today=dayKey();cards.innerHTML='';body.innerHTML='';let completeDays=0;WEEK.forEach((p,i)=>{const d=Object.assign(blankDaily(),state.daily[p.date]||{}),count=d.practice+d.examQuestions,acc=d.done?Math.round(d.correct/d.done*100):0,g=gradeDayObj(d,p.target),complete=count>=p.target;if(complete)completeDays++;const card=document.createElement('div');card.className='day'+(p.date===today?' today':'')+(complete?' completed':'');card.innerHTML=`<div class="row spread"><div><div class="small muted">${p.date}</div><h3>Ngày ${i+1} — ${p.title}</h3></div><span class="tag">${complete?'✓ Đủ bài':Math.min(100,Math.round(count/p.target*100))+'%'}</span></div><p class="small">${p.task}</p><div class="progress"><div style="width:${Math.min(100,count/p.target*100)}%"></div></div><p class="small">Đã làm <b>${count}/${p.target}</b> • Chính xác <b>${acc}%</b> • Xếp loại <b>${g.grade}</b></p><div class="day-actions"><button class="btn primary dayStart" data-day="${i}">${i===6?'Mở phòng đề':'Bắt đầu học'}</button><button class="btn dayMem" data-date="${p.date}">${d.memorized?'✓ Đã thuộc':'Đánh dấu đã thuộc'}</button></div>`;cards.appendChild(card);const tr=document.createElement('tr');tr.innerHTML=`<td>Ngày ${i+1}<br><span class="muted">${p.date}</span></td><td><b>${g.grade}</b> (${g.score})</td><td>${p.target}</td><td>${count}</td><td>${d.correct}/${d.wrong}</td><td>${acc}%</td><td>${d.exams}</td><td>${d.best?d.best+'%':'—'}</td><td>${fmtTime(d.studySeconds)}</td><td>${d.memorized?'✅':'⬜'}</td>`;body.appendChild(tr)});$('#weekProgress').style.width=(completeDays/7*100)+'%';$('#weekProgressText').textContent=`${completeDays}/7 ngày đạt mục tiêu`;const tp=WEEK.find(x=>x.date===today),td=tp?Object.assign(blankDaily(),state.daily[today]||{}):blankDaily(),tc=td.practice+td.examQuestions,ta=td.done?Math.round(td.correct/td.done*100):0;$('#todayLabel').textContent=tp?`Hôm nay: Ngày ${WEEK.indexOf(tp)+1}`:'Ngoài tuần 7 ngày';$('#todaySummary').innerHTML=`<div class="metric"><b>${tp?tp.title:'—'}</b><span class="small muted">Nhiệm vụ</span></div><div class="metric"><b>${tp?tc+'/'+tp.target:'—'}</b><span class="small muted">Tiến độ</span></div><div class="metric"><b>${ta}%</b><span class="small muted">Chính xác</span></div><div class="metric"><b>${fmtTime(td.studySeconds)}</b><span class="small muted">Thời gian</span></div>`;const analysisDate=tp?today:(WEEK.slice().reverse().find(x=>state.daily[x.date]?.done>0)?.date||WEEK[0].date),ad=Object.assign(blankDaily(),state.daily[analysisDate]||{}),ap=WEEK.find(x=>x.date===analysisDate),ag=gradeDayObj(ad,ap?.target||60),weak=weakGroups(analysisDate),badge=$('#dayGradeBadge');badge.textContent=ag.grade;badge.className=`grade-badge grade-${ag.grade}`;$('#dayAnalysis').innerHTML=`<div class="analysis-item"><div class="meta"><b>Xếp loại ${ag.grade}</b><span>${ag.score}/100</span></div><div>${ag.text}</div></div>`+(weak.length?weak.slice(0,3).map(([k,s],i)=>`<div class="analysis-item"><div class="meta"><b>${i===0?'⚠️ Yếu nhất':'Cần củng cố'}: ${groupName(k)}</b><span>${s.acc}%</span></div><div>${s.correct}/${s.done} đúng • ${s.wrong} sai</div></div>`).join(''):'<div class="analysis-item muted">Chưa đủ dữ liệu để phân tích.</div>');$('#tomorrowPlan').innerHTML='<b>📌 Kế hoạch ngày mai</b><br>'+tomorrowPlan(analysisDate);drawSkillRadar(analysisDate);renderReviewPreview(analysisDate);$$('.dayStart').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.day);if(i===6)return showView('exam');practice.level=Math.min(8,i+1);$('#practiceLevel').value=String(practice.level);practice.index=0;showView('practice');renderPractice()}));$$('.dayMem').forEach(b=>b.addEventListener('click',()=>{daily(b.dataset.date).memorized=!daily(b.dataset.date).memorized;save()}))}
+function mastery(){const overall=state.done?state.correct/state.done*100:50;const rs=Object.values(state.examRoom.results||{});const examAvg=rs.length?rs.reduce((s,r)=>s+(r.best||0),0)/rs.length:overall;const ls=Object.values(state.levelStats).filter(s=>s.d>=10);const levelAvg=ls.length?ls.reduce((s,x)=>s+x.c/x.d*100,0)/ls.length:overall;return Math.round(Math.max(0,Math.min(100,overall*.5+examAvg*.3+levelAvg*.2)))}
+function tier(){const m=mastery();return m<65?1:m<78?2:m<88?3:4}
+const EXAMS=[
+ {n:1,name:'Khởi động',target:65,base:1},{n:2,name:'Nền tảng vững',target:68,base:1},{n:3,name:'Kết nối',target:70,base:2},{n:4,name:'Tăng tốc',target:72,base:2},{n:5,name:'Vận dụng',target:75,base:2},
+ {n:6,name:'Phân hóa',target:78,base:3},{n:7,name:'Nâng cao',target:80,base:3},{n:8,name:'Tổng hợp khó',target:82,base:3},{n:9,name:'Chinh phục',target:85,base:4},{n:10,name:'Master Challenge',target:88,base:4}
+];
+const TIER_NAMES={1:'Cơ bản',2:'Khá',3:'Nâng cao',4:'Thử thách'};
+function unlocked(n){if(n===1)return true;const prev=EXAMS[n-2],r=state.examRoom.results[n-1];return !!r&&r.best>=prev.target}
+function effectiveTier(c){return Math.max(1,Math.min(4,Math.max(c.base-1,Math.min(c.base+1,tier()))))}
+function weakSkills(){const counts={};Object.values(state.wrong).forEach(w=>{const q=QUESTIONS.find(x=>x.id===w.id);if(q)counts[q.skill]=(counts[q.skill]||0)+1});return Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0])}
+function makeExam(n){const c=EXAMS[n-1],t=effectiveTier(c),weak=weakSkills();let levels=t===1?[1,2,3]:t===2?[2,3,4,5]:t===3?[4,5,6,7]:[6,7,8];let pool=QUESTIONS.filter(q=>levels.includes(q.level));let ordered=[...shuffled(pool.filter(q=>weak.includes(q.skill))),...shuffled(pool.filter(q=>!weak.includes(q.skill)))];const seen=new Set(),qs=[];for(const q of ordered){if(qs.length>=40)break;if(!seen.has(q.id)){seen.add(q.id);qs.push(q)}}state.examRoom.sets[n]={ids:qs.map(q=>q.id),tier:t,weak};save();return state.examRoom.sets[n]}
+function getExam(n){let s=state.examRoom.sets[n];return !s||s.ids.length!==40?makeExam(n):s}
+function renderExamRoom(){if(!$('#examGrid'))return;const m=mastery(),t=tier(),rs=state.examRoom.results;$('#masteryScore').textContent=m;$('#masteryFill').style.width=m+'%';$('#masteryTier').textContent=TIER_NAMES[t];const passed=EXAMS.filter(e=>rs[e.n]&&rs[e.n].best>=e.target).length;$('#passedExams').textContent=passed+'/10';const bs=Object.values(rs).map(r=>r.best||0);$('#bestExam').textContent=bs.length?Math.max(...bs)+'%':'—';const grid=$('#examGrid');grid.innerHTML='';EXAMS.forEach(c=>{const u=unlocked(c.n),r=rs[c.n],et=effectiveTier(c);const d=document.createElement('div');d.className='exam-card '+(!u?'locked ':'')+(r&&r.best>=c.target?'done ':'')+(u&&!r?'recommended':'');d.innerHTML=`<h3>Đề ${c.n} — ${c.name}</h3><p class="small">Chuẩn mở khóa: <b>${c.target}%</b></p><p class="small">Độ khó thích nghi: <b>${TIER_NAMES[et]}</b></p><p class="small muted">${r?`Đã thi ${r.attempts} lần • Tốt nhất ${r.best}%`:'Chưa làm'}</p><button class="btn ${u?'primary':''} startExam" data-n="${c.n}" ${u?'':'disabled'}>${u?'Bắt đầu đề':'🔒 Chưa mở'}</button>`;grid.appendChild(d)});$$('.startExam').forEach(b=>b.addEventListener('click',()=>startExam(Number(b.dataset.n))));const g=$('#examDots');g.innerHTML='';EXAMS.forEach((c,i)=>{const x=48+i*36.5,y=180-i*13.5,pass=rs[c.n]&&rs[c.n].best>=c.target;g.innerHTML+=`<circle cx="${x}" cy="${y}" r="${pass?10:8}" fill="${pass?'#16a34a':'#fff'}" stroke="${pass?'#16a34a':'#94a3b8'}" stroke-width="3"/><text x="${x}" y="${y+4}" text-anchor="middle" font-size="9" font-weight="900" fill="${pass?'#fff':'#475569'}">${c.n}</text>`})}
+let exam={n:1,qs:[],answers:[],index:0,seconds:0,total:0,started:0,timer:null,running:false,tier:1};
+function startExam(n){const set=getExam(n);exam.n=n;exam.tier=set.tier;exam.qs=set.ids.map(id=>QUESTIONS.find(q=>q.id===id));exam.answers=Array(40).fill(null);exam.index=0;exam.total=Number($('#examMinutes').value)*60;exam.seconds=exam.total;exam.started=Date.now();exam.running=true;$('#examSetup').classList.add('hidden');$('#examRun').classList.remove('hidden');$('#examResult').classList.add('hidden');$('#examTag').textContent=`ĐỀ ${n} • ${TIER_NAMES[exam.tier]}`;renderExam();tickExam();clearInterval(exam.timer);exam.timer=setInterval(()=>{exam.seconds--;tickExam();if(exam.seconds<=0)submitExam(true)},1000)}
+function tickExam(){const m=Math.floor(exam.seconds/60),s=exam.seconds%60;$('#examTimer').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;$('#examTimer').classList.toggle('danger',exam.seconds<=300)}
+function renderExam(){const q=exam.qs[exam.index];$('#examCounter').textContent=`Câu ${exam.index+1}/40`;$('#examQuestion').innerHTML=q.q;const c=$('#examChoices');c.innerHTML='';q.opts.forEach(o=>{const b=document.createElement('button');b.className='choice';b.innerHTML=o;if(exam.answers[exam.index]===o)b.style.outline='3px solid var(--accent)';b.addEventListener('click',()=>{exam.answers[exam.index]=o;renderExam()});c.appendChild(b)});$('#prevExam').disabled=exam.index===0;$('#nextExam').disabled=exam.index===39;const nav=$('#examNav');nav.innerHTML='';exam.qs.forEach((_,i)=>{const b=document.createElement('button');b.className='navq'+(exam.answers[i]!==null?' answered':'')+(i===exam.index?' current':'');b.textContent=i+1;b.addEventListener('click',()=>{exam.index=i;renderExam()});nav.appendChild(b)});$('#answeredCount').textContent=`${exam.answers.filter(x=>x!==null).length}/40 đã trả lời`}
+$('#prevExam').addEventListener('click',()=>{if(exam.index>0){exam.index--;renderExam()}});$('#nextExam').addEventListener('click',()=>{if(exam.index<39){exam.index++;renderExam()}});$('#submitExam').addEventListener('click',()=>submitExam(false));
+function submitExam(auto){if(!exam.running)return;if(!auto&&!confirm('Nộp bài?'))return;exam.running=false;clearInterval(exam.timer);let correct=0;exam.qs.forEach((q,i)=>{const ok=exam.answers[i]===q.a;if(ok)correct++;record(q,ok,exam.answers[i]??'Chưa trả lời','exam',false)});const pct=Math.round(correct/40*100),c=EXAMS[exam.n-1],d=daily();d.exams=(d.exams||0)+1;d.best=Math.max(d.best||0,pct);d.studySeconds+=Math.max(0,Math.min(exam.total,Math.round((Date.now()-exam.started)/1000)));const prev=state.examRoom.results[exam.n]||{attempts:0,best:0};state.examRoom.results[exam.n]={attempts:prev.attempts+1,best:Math.max(prev.best,pct),last:pct};save();$('#examRun').classList.add('hidden');const r=$('#examResult');r.classList.remove('hidden');r.innerHTML=`<h2>${pct>=c.target?'🎉':'📚'} Đề ${exam.n}: ${correct}/40 — ${pct}%</h2><p><b>${pct>=c.target?'Đạt chuẩn '+c.target+'%':'Chưa đạt chuẩn '+c.target+'%'}</b></p><div class="metric-grid"><div class="metric"><b>${correct}</b><span class="small muted">Đúng</span></div><div class="metric"><b>${40-correct}</b><span class="small muted">Sai</span></div><div class="metric"><b>${mastery()}</b><span class="small muted">Mastery mới</span></div><div class="metric"><b>${TIER_NAMES[tier()]}</b><span class="small muted">Bậc mới</span></div></div><div class="row" style="margin-top:12px"><button class="btn primary" id="backRoom">Về phòng đề</button><button class="btn" id="goWrong">Ôn câu sai</button></div>`;$('#backRoom').addEventListener('click',()=>{r.classList.add('hidden');$('#examSetup').classList.remove('hidden');renderExamRoom()});$('#goWrong').addEventListener('click',()=>showView('wrong'))}
+
+function renderWrong(){const ids=Object.keys(state.wrong).map(Number),box=$('#wrongList');$('#wrongCount').textContent=ids.length+' câu';box.innerHTML='';if(!ids.length){box.innerHTML='<p class="muted">Chưa có câu sai — rất tốt.</p>';return}ids.slice(-80).reverse().forEach(id=>{const q=QUESTIONS.find(x=>x.id===id);if(!q)return;const d=document.createElement('div');d.className='card';d.style.marginTop='10px';d.innerHTML=`<span class="tag">${SKILL_NAMES[q.skill]}</span><div style="margin-top:8px"><b>${q.q}</b></div><p class="small">Đáp án đúng: <b>${q.a}</b></p><div class="small muted">${q.exp}</div>`;box.appendChild(d)})}
+
+updateTop();renderRoadmap();renderPractice();renderDaily();renderExamRoom();renderWrong();
+$('#buildReview').addEventListener('click',()=>{const d=daily();d.reviewSet=[];buildReviewSet(dayKey(),true);save()});
+$('#startReview').addEventListener('click',startReviewSession);
+if(state.teacher.lockedSkill)openTeacher(state.teacher.lockedSkill);
+window.addEventListener('beforeunload',()=>{clearInterval(exam.timer);clearInterval(teacher.timer)})
+</script>
+</body>
+</html>
